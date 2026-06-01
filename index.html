@@ -21,7 +21,7 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;background:var(--bg);color:var(--txt);font-family:"Chakra Petch",sans-serif;overflow:hidden;}
   .num{font-family:"DM Mono",monospace;}
-
+ 
   /* ---------- start gate ---------- */
   #gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;
     background:radial-gradient(120% 80% at 50% 0%,#0e161c 0%,#07090b 60%);}
@@ -38,13 +38,13 @@
     padding:16px 40px;border-radius:4px;cursor:pointer;transition:.18s;opacity:.4;pointer-events:none;}
   #startBtn.ready{opacity:1;pointer-events:auto;box-shadow:0 0 28px rgba(0,230,118,.25);}
   #startBtn:active{transform:scale(.97);}
-
+ 
   /* ---------- camera + hud ---------- */
   #stage{position:fixed;inset:0;}
   video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;}
   #frameGuide{position:absolute;inset:18px;border:1px solid rgba(255,255,255,.14);border-radius:6px;pointer-events:none;
     transition:border-color .15s, box-shadow .15s;}
-
+ 
   /* top bar */
   #top{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;
     display:flex;justify-content:space-between;align-items:flex-start;
@@ -55,14 +55,14 @@
   #counter .n{font-size:30px;line-height:1;font-weight:600;}
   #counter .l{font-size:9px;letter-spacing:.28em;color:var(--muted);text-transform:uppercase;margin-top:3px;}
   #counter .n b{color:var(--green);}
-
+ 
   /* status pill */
   #status{position:absolute;left:50%;top:34%;translate:-50% -50%;z-index:10;
     text-align:center;width:86%;max-width:420px;pointer-events:none;transition:.15s;}
   #statusLabel{display:inline-block;font-weight:700;font-size:22px;letter-spacing:.06em;text-transform:uppercase;
     padding:10px 20px;border-radius:5px;border:1px solid currentColor;background:rgba(0,0,0,.42);backdrop-filter:blur(2px);}
   #statusSub{margin-top:10px;font-size:12px;letter-spacing:.16em;color:rgba(255,255,255,.7);text-transform:uppercase;}
-
+ 
   /* vertical coverage bands (floor / walls / ceiling) */
   #bands{position:absolute;top:calc(env(safe-area-inset-top) + 64px);left:50%;translate:-50% 0;z-index:10;
     display:flex;gap:7px;background:rgba(0,0,0,.42);backdrop-filter:blur(2px);padding:6px;border-radius:8px;border:1px solid var(--line);}
@@ -71,7 +71,7 @@
   .band .cnt{font-family:"DM Mono",monospace;font-size:16px;line-height:1.1;margin-top:2px;color:var(--txt);}
   .band.done{background:rgba(0,230,118,.14);} .band.done .cnt{color:var(--green);}
   .band.aimed{border-color:#fff;box-shadow:0 0 14px rgba(255,255,255,.35);}
-
+ 
   /* bottom panel */
   #panel{position:absolute;left:0;right:0;bottom:0;z-index:10;padding:16px 18px calc(env(safe-area-inset-bottom) + 18px);
     background:linear-gradient(0deg,var(--panel) 40%,transparent);}
@@ -82,7 +82,7 @@
   .zone{position:absolute;top:0;bottom:0;background:rgba(0,230,118,.22);border-left:1px solid rgba(0,230,118,.5);border-right:1px solid rgba(0,230,118,.5);}
   .fill{position:absolute;top:0;bottom:0;left:0;border-radius:6px;transition:width .12s, background .12s;}
   .mark{position:absolute;top:-3px;width:2px;height:14px;background:#fff;border-radius:2px;box-shadow:0 0 6px rgba(255,255,255,.6);transition:left .12s;}
-
+ 
   #controls{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:14px;}
   #zipBtn,#thumbWrap{flex:1;}
   #zipBtn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--txt);
@@ -99,10 +99,24 @@
   #shutter.s-amber::after{background:var(--amber);}
   #shutter.s-red::after{background:#fff;opacity:.5;}
   #shutter:active{transform:scale(.92);}
+  /* video mode shutter */
+  #shutter.rec-idle{border-color:var(--red);}
+  #shutter.rec-idle::after{background:var(--red);}
+  #shutter.recording{border-color:var(--red);box-shadow:0 0 26px rgba(255,69,58,.6);}
+  #shutter.recording::after{border-radius:8px;inset:22px;background:var(--red);}
+ 
+  /* mode toggle */
+  #modeToggle{display:flex;gap:0;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:8px;padding:3px;margin:0 auto 13px;width:fit-content;}
+  #modeToggle button{font-family:"Chakra Petch";font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);background:transparent;border:none;padding:7px 22px;border-radius:6px;cursor:pointer;transition:.15s;}
+  #modeToggle button.on{background:rgba(255,255,255,.12);color:var(--txt);}
+  #recBadge{display:none;align-items:center;gap:6px;justify-content:center;color:var(--red);font-family:"DM Mono",monospace;font-size:13px;letter-spacing:.08em;margin-bottom:8px;}
+  #recBadge.show{display:flex;}
+  #recBadge .rdot{width:9px;height:9px;border-radius:50%;background:var(--red);animation:pulse .9s infinite;}
   #thumbWrap{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
   #lastThumb{width:46px;height:46px;border-radius:6px;object-fit:cover;border:1px solid var(--line);background:rgba(255,255,255,.05);}
   #thumbWrap .t{font-size:9px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
-
+ 
   /* flash */
   #flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:40;}
   #flash.go{animation:flash .28s ease-out;}
@@ -111,7 +125,7 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- START GATE -->
 <div id="gate">
   <h1>3D Gaussian Splat</h1>
@@ -121,38 +135,43 @@
   <button id="startBtn">Start Camera</button>
   <p style="font-size:11px;margin-top:22px;opacity:.6">Allow camera access when prompted • Works offline once loaded</p>
 </div>
-
+ 
 <!-- CAMERA STAGE -->
 <div id="stage" class="hide">
   <video id="video" playsinline autoplay muted></video>
   <div id="frameGuide"></div>
-
+ 
   <div id="top">
     <div id="brand">CAPTURE COACH<small>splat capture · v1</small></div>
     <div id="counter"><div class="n num"><b id="shotN">0</b> / <span id="shotTarget">60</span></div><div class="l">shots</div></div>
   </div>
-
+ 
   <div id="bands">
     <div class="band" id="b-floor"><div class="lab">Floor ↓</div><div class="cnt">0</div></div>
     <div class="band" id="b-wall"><div class="lab">Walls •</div><div class="cnt">0</div></div>
     <div class="band" id="b-ceiling"><div class="lab">Ceiling ↑</div><div class="cnt">0</div></div>
   </div>
-
+ 
   <div id="status">
     <div id="statusLabel" style="color:var(--amber)">STARTING…</div>
     <div id="statusSub">point at your scene</div>
   </div>
-
+ 
   <div id="panel">
+    <div id="modeToggle">
+      <button id="modePhoto" class="on">Photo</button>
+      <button id="modeVideo">Video</button>
+    </div>
+    <div id="recBadge"><span class="rdot"></span><span id="recTime">0:00</span> recording</div>
     <div class="meter">
       <div class="head"><span>Sharpness</span><span class="val num" id="sharpVal">—</span></div>
       <div class="track"><div class="fill" id="sharpFill" style="width:0%"></div><div class="mark" id="sharpThresh" style="left:18%"></div></div>
     </div>
     <div class="meter">
-      <div class="head"><span>Movement since last shot</span><span class="val num" id="moveVal">—</span></div>
+      <div class="head"><span id="moveLabel">Movement since last shot</span><span class="val num" id="moveVal">—</span></div>
       <div class="track"><div class="zone" id="moveZone"></div><div class="mark" id="moveMark" style="left:0%"></div></div>
     </div>
-
+ 
     <div id="controls">
       <button id="zipBtn" disabled>Download<br>ZIP</button>
       <button id="shutter" class="s-amber" aria-label="capture"></button>
@@ -160,9 +179,9 @@
     </div>
   </div>
 </div>
-
+ 
 <div id="flash"></div>
-
+ 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 /* ============ tuning constants ============ */
@@ -176,17 +195,21 @@ const MIN_MATCHES = 12;    // fewer good matches = overlap lost
 const LOW_FEAT    = 45;    // fewer keypoints = low texture (blank wall/glass)
 const TARGET_SHOTS= 60;
 const TICK_MS     = 230;   // analysis interval
-
+const VIDEO_FAST  = 11;    // % frame-to-frame shift per tick — above = walking too fast
+ 
 /* ============ state ============ */
 let cvReady=false, running=false;
-let prevKp=null, prevDes=null;        // keyframe (last captured) descriptors
+let mode='photo';                      // 'photo' | 'video'
+let prevKp=null, prevDes=null;         // keyframe (last captured photo) descriptors
+let lastKp=null, lastDes=null;         // previous frame (for video pace tracking)
 let shots=[];                          // {blob, url}
 let bands={floor:0,wall:0,ceiling:0};  // shots per vertical band
 let curPitch=null;                     // live camera pitch in degrees (+up / -down)
 const BAND_DONE=6;                     // shots needed to mark a band complete
 let procCanvas, procCtx, capCanvas, capCtx;
-let video;
-
+let video, mediaStream;
+let mediaRecorder=null, recChunks=[], recStart=0, recTimer=null, recMime='';
+ 
 /* ============ opencv loader (cdnjs, with fallback) ============ */
 (function loadCV(){
   function ready(){
@@ -212,17 +235,17 @@ let video;
   };
   document.body.appendChild(s);
 })();
-
+ 
 /* ============ start camera ============ */
 document.getElementById('startBtn').addEventListener('click', async ()=>{
   if(!cvReady) return;
   try{
-    const stream = await navigator.mediaDevices.getUserMedia({
+    mediaStream = await navigator.mediaDevices.getUserMedia({
       audio:false,
       video:{ facingMode:{ideal:'environment'}, width:{ideal:1920}, height:{ideal:1080} }
     });
     video=document.getElementById('video');
-    video.srcObject=stream;
+    video.srcObject=mediaStream;
     await video.play();
   }catch(e){
     alert('Camera access failed: '+e.message+'\nOpen this page over HTTPS or localhost and allow the camera.');
@@ -230,17 +253,17 @@ document.getElementById('startBtn').addEventListener('click', async ()=>{
   }
   document.getElementById('gate').classList.add('hide');
   document.getElementById('stage').classList.remove('hide');
-
+ 
   procCanvas=document.createElement('canvas'); procCtx=procCanvas.getContext('2d',{willReadFrequently:true});
   capCanvas=document.createElement('canvas');  capCtx=capCanvas.getContext('2d');
   document.getElementById('shotTarget').textContent=TARGET_SHOTS;
-
+ 
   positionMoveZone();
   enableTilt();
   running=true;
   loop();
 });
-
+ 
 /* ----- vertical tilt sensing (ceiling / floor coverage) ----- */
 function enableTilt(){
   function attach(){ window.addEventListener('deviceorientation', onTilt, true); }
@@ -270,7 +293,7 @@ function updateBands(){
     el.classList.toggle('aimed', k===aimed);
   });
 }
-
+ 
 /* place the green "sweet zone" on the movement bar */
 function positionMoveZone(){
   const z=document.getElementById('moveZone');
@@ -278,14 +301,14 @@ function positionMoveZone(){
   z.style.width=(MOVE_MAX-MOVE_MIN)+'%';
   document.getElementById('sharpThresh').style.left=Math.min(100,(SHARP_MIN/SHARP_DISP*100))+'%';
 }
-
+ 
 /* ============ analysis loop ============ */
 function loop(){
   if(!running) return;
   try{ analyze(); }catch(e){ /* keep loop alive */ }
   setTimeout(()=>requestAnimationFrame(loop), TICK_MS);
 }
-
+ 
 function drawToProc(){
   const vw=video.videoWidth, vh=video.videoHeight;
   if(!vw||!vh) return false;
@@ -294,13 +317,13 @@ function drawToProc(){
   procCtx.drawImage(video,0,0,w,h);
   return true;
 }
-
+ 
 function analyze(){
   if(!drawToProc()) return;
   const src=cv.imread(procCanvas);
   const gray=new cv.Mat();
   cv.cvtColor(src,gray,cv.COLOR_RGBA2GRAY);
-
+ 
   /* --- sharpness: variance of Laplacian --- */
   const lap=new cv.Mat(), mean=new cv.Mat(), std=new cv.Mat();
   cv.Laplacian(gray,lap,cv.CV_64F);
@@ -308,7 +331,7 @@ function analyze(){
   const sd=std.doubleAt(0,0);
   const sharp=sd*sd;
   lap.delete(); mean.delete(); std.delete();
-
+ 
   /* --- ORB features on current frame --- */
   const orb=new cv.ORB(400);
   const kp=new cv.KeyPointVector();
@@ -316,20 +339,22 @@ function analyze(){
   const noMask=new cv.Mat();
   orb.detectAndCompute(gray,noMask,kp,des);
   const featCount=kp.size();
-
-  /* --- overlap vs last captured keyframe --- */
-  let goodMatches=0, dispPct=null;
-  if(prevDes && prevDes.rows>0 && des.rows>0){
+ 
+  /* --- matching: photo = vs last shot, video = vs previous frame --- */
+  let goodMatches=0, dispPct=null, keepCurrent=false;
+  const refDes = (mode==='video') ? lastDes : prevDes;
+  const refKp  = (mode==='video') ? lastKp  : prevKp;
+  if(refDes && refDes.rows>0 && des.rows>0){
     const bf=new cv.BFMatcher(cv.NORM_HAMMING,false);
     const mm=new cv.DMatchVectorVector();
-    bf.knnMatch(prevDes,des,mm,2);
+    bf.knnMatch(refDes,des,mm,2);
     const dists=[];
     for(let i=0;i<mm.size();i++){
       const pair=mm.get(i);
       if(pair.size()>=2){
         const a=pair.get(0), b=pair.get(1);
         if(a.distance < 0.75*b.distance){
-          const p1=prevKp.get(a.queryIdx).pt;
+          const p1=refKp.get(a.queryIdx).pt;
           const p2=kp.get(a.trainIdx).pt;
           dists.push(Math.hypot(p1.x-p2.x, p1.y-p2.y));
         }
@@ -340,34 +365,37 @@ function analyze(){
     goodMatches=dists.length;
     if(dists.length){
       dists.sort((x,y)=>x-y);
-      const med=dists[Math.floor(dists.length/2)];
-      dispPct=(med/PROC_W)*100;
+      dispPct=(dists[Math.floor(dists.length/2)]/PROC_W)*100;
     }
   }
-
+ 
   /* --- decide status --- */
   let level, label, sub;
-  if(sharp < SHARP_MIN){
-    level='red'; label='HOLD STILL'; sub='blurry — steady the phone';
-  } else if(featCount < LOW_FEAT){
-    level='amber'; label='LOW DETAIL'; sub='aim at a textured area, not blank wall / glass';
-  } else if(!prevDes){
-    level='green'; label='READY'; sub='take your first shot';
-  } else if(goodMatches < MIN_MATCHES){
-    level='red'; label='OVERLAP LOST'; sub='back up toward your last spot';
-  } else if(dispPct!==null && dispPct < MOVE_MIN){
-    level='amber'; label='MOVE A BIT'; sub='step ~30 cm to the side';
-  } else if(dispPct!==null && dispPct > MOVE_MAX){
-    level='amber'; label='TOO FAR'; sub='step back — keep 60–70% overlap';
+  if(mode==='video'){
+    if(sharp < SHARP_MIN){ level='red'; label='BLURRY'; sub='slow down / steady the phone'; }
+    else if(featCount < LOW_FEAT){ level='amber'; label='LOW DETAIL'; sub='aim at textured areas, not blank wall / glass'; }
+    else if(dispPct!==null && dispPct > VIDEO_FAST){ level='amber'; label='SLOW DOWN'; sub='walking too fast — frames will blur'; }
+    else { level='green'; label='GOOD PACE'; sub='keep walking slowly, cover every angle'; }
+    // store current frame as reference for next tick
+    if(lastKp) lastKp.delete();
+    if(lastDes) lastDes.delete();
+    lastKp=kp; lastDes=des; keepCurrent=true;
   } else {
-    level='green'; label='SHOOT NOW'; sub='good overlap & sharpness';
+    if(sharp < SHARP_MIN){ level='red'; label='HOLD STILL'; sub='blurry — steady the phone'; }
+    else if(featCount < LOW_FEAT){ level='amber'; label='LOW DETAIL'; sub='aim at a textured area, not blank wall / glass'; }
+    else if(!prevDes){ level='green'; label='READY'; sub='take your first shot'; }
+    else if(goodMatches < MIN_MATCHES){ level='red'; label='OVERLAP LOST'; sub='back up toward your last spot'; }
+    else if(dispPct!==null && dispPct < MOVE_MIN){ level='amber'; label='MOVE A BIT'; sub='step ~30 cm to the side'; }
+    else if(dispPct!==null && dispPct > MOVE_MAX){ level='amber'; label='TOO FAR'; sub='step back — keep 60–70% overlap'; }
+    else { level='green'; label='SHOOT NOW'; sub='good overlap & sharpness'; }
   }
-
+ 
   render(level,label,sub,sharp,dispPct);
-
-  src.delete(); gray.delete(); kp.delete(); des.delete(); noMask.delete(); orb.delete();
+ 
+  src.delete(); gray.delete(); noMask.delete(); orb.delete();
+  if(!keepCurrent){ kp.delete(); des.delete(); }
 }
-
+ 
 /* ============ HUD render ============ */
 const COL={green:'var(--green)',amber:'var(--amber)',red:'var(--red)'};
 const HEX={green:'#00e676',amber:'#ffb300',red:'#ff453a'};
@@ -375,58 +403,61 @@ function render(level,label,sub,sharp,dispPct){
   const lab=document.getElementById('statusLabel');
   lab.textContent=label; lab.style.color=COL[level];
   document.getElementById('statusSub').textContent=sub;
-
+ 
   document.getElementById('frameGuide').style.borderColor=HEX[level];
   document.getElementById('frameGuide').style.boxShadow=level==='green'?'inset 0 0 40px rgba(0,230,118,.18)':'none';
-
+ 
   // sharpness meter
   const sPct=Math.max(0,Math.min(100,(sharp/SHARP_DISP)*100));
   const sFill=document.getElementById('sharpFill');
   sFill.style.width=sPct+'%';
   sFill.style.background= sharp<SHARP_MIN ? HEX.red : HEX.green;
   document.getElementById('sharpVal').textContent=Math.round(sharp);
-
-  // movement meter
+ 
+  // movement / pace meter
   const mMark=document.getElementById('moveMark');
   const mVal=document.getElementById('moveVal');
-  if(dispPct===null){ mMark.style.left='0%'; mVal.textContent='— (first shot)'; }
+  if(dispPct===null){ mMark.style.left='0%'; mVal.textContent= mode==='video' ? '—' : '— (first shot)'; }
   else{
     mMark.style.left=Math.max(0,Math.min(100,dispPct))+'%';
     mVal.textContent=dispPct.toFixed(1)+'%';
   }
-
-  // shutter glow
-  const sh=document.getElementById('shutter');
-  sh.className='s-'+level;
+ 
+  // shutter glow only reflects status in photo mode (video manages its own rec state)
+  if(mode==='photo'){ document.getElementById('shutter').className='s-'+level; }
 }
-
-/* ============ capture ============ */
-document.getElementById('shutter').addEventListener('click', capture);
+ 
+/* ============ shutter dispatcher ============ */
+document.getElementById('shutter').addEventListener('click', ()=>{
+  if(mode==='video') toggleRecording();
+  else capture();
+});
 async function capture(){
+  if(mode!=='photo') return;
   if(!video||!video.videoWidth) return;
   const vw=video.videoWidth, vh=video.videoHeight;
   const scale=Math.min(1, CAP_MAXEDGE/Math.max(vw,vh));
   const w=Math.round(vw*scale), h=Math.round(vh*scale);
   capCanvas.width=w; capCanvas.height=h;
   capCtx.drawImage(video,0,0,w,h);
-
+ 
   // flash + store
   const f=document.getElementById('flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
   const blob=await new Promise(r=>capCanvas.toBlob(r,'image/jpeg',0.92));
   const url=URL.createObjectURL(blob);
   shots.push({blob,url});
-
+ 
   document.getElementById('shotN').textContent=shots.length;
   document.getElementById('lastThumb').src=url;
   document.getElementById('zipBtn').disabled = shots.length===0;
-
+ 
   bands[bandOf(curPitch)]++;   // log which vertical band this shot covered
   updateBands();
-
+ 
   // new keyframe = ORB of this captured frame (downscaled to PROC_W)
   setKeyframeFromCapture();
 }
-
+ 
 function setKeyframeFromCapture(){
   const vw=capCanvas.width, vh=capCanvas.height;
   const w=PROC_W, h=Math.round(vh*(PROC_W/vw));
@@ -442,7 +473,7 @@ function setKeyframeFromCapture(){
   prevKp=kp; prevDes=des;
   src.delete(); gray.delete(); noMask.delete(); orb.delete();
 }
-
+ 
 /* ============ ZIP export ============ */
 document.getElementById('zipBtn').addEventListener('click', async ()=>{
   if(!shots.length) return;
@@ -461,6 +492,87 @@ document.getElementById('zipBtn').addEventListener('click', async ()=>{
   document.body.appendChild(a); a.click(); a.remove();
   btn.innerHTML='Download<br>ZIP'; btn.disabled=false;
 });
+ 
+/* ============ mode switching ============ */
+document.getElementById('modePhoto').addEventListener('click', ()=>setMode('photo'));
+document.getElementById('modeVideo').addEventListener('click', ()=>setMode('video'));
+ 
+function setMode(m){
+  if(m===mode) return;
+  if(mode==='video' && mediaRecorder && mediaRecorder.state==='recording') return; // don't switch mid-record
+  mode=m;
+  document.getElementById('modePhoto').classList.toggle('on', m==='photo');
+  document.getElementById('modeVideo').classList.toggle('on', m==='video');
+ 
+  // clear the previous-frame reference used by video pace
+  if(lastKp){ lastKp.delete(); lastKp=null; }
+  if(lastDes){ lastDes.delete(); lastDes=null; }
+ 
+  const zip=document.getElementById('zipBtn');
+  const thumb=document.getElementById('thumbWrap');
+  const moveLabel=document.getElementById('moveLabel');
+  const zone=document.getElementById('moveZone');
+  const sh=document.getElementById('shutter');
+ 
+  if(m==='video'){
+    zip.classList.add('hide'); thumb.classList.add('hide');
+    moveLabel.textContent='Pace (keep it slow)';
+    zone.style.left='0%'; zone.style.width=VIDEO_FAST+'%';   // green = slow enough
+    sh.className='rec-idle';
+    document.getElementById('counter').classList.add('hide');
+  } else {
+    zip.classList.remove('hide'); thumb.classList.remove('hide');
+    moveLabel.textContent='Movement since last shot';
+    positionMoveZone();
+    sh.className='s-amber';
+    document.getElementById('counter').classList.remove('hide');
+    document.getElementById('recBadge').classList.remove('show');
+  }
+}
+ 
+/* ============ video recording ============ */
+function pickMime(){
+  const opts=['video/mp4;codecs=h264','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+  for(const m of opts){ try{ if(MediaRecorder.isTypeSupported(m)) return m; }catch(e){} }
+  return '';
+}
+function toggleRecording(){
+  if(mediaRecorder && mediaRecorder.state==='recording'){ stopRecording(); }
+  else { startRecording(); }
+}
+function startRecording(){
+  if(!mediaStream) return;
+  recChunks=[];
+  recMime=pickMime();
+  try{
+    mediaRecorder=new MediaRecorder(mediaStream, recMime ? {mimeType:recMime, videoBitsPerSecond:8000000} : {videoBitsPerSecond:8000000});
+  }catch(e){ alert('Recording not supported on this browser: '+e.message); return; }
+  mediaRecorder.ondataavailable=e=>{ if(e.data && e.data.size) recChunks.push(e.data); };
+  mediaRecorder.onstop=saveRecording;
+  mediaRecorder.start(1000);
+  recStart=Date.now();
+  document.getElementById('shutter').className='recording';
+  document.getElementById('recBadge').classList.add('show');
+  recTimer=setInterval(()=>{
+    const s=Math.floor((Date.now()-recStart)/1000);
+    document.getElementById('recTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  },500);
+}
+function stopRecording(){
+  if(!mediaRecorder) return;
+  mediaRecorder.stop();
+  clearInterval(recTimer);
+  document.getElementById('shutter').className='rec-idle';
+  document.getElementById('recBadge').classList.remove('show');
+}
+function saveRecording(){
+  const type=recMime || 'video/webm';
+  const ext = type.indexOf('mp4')>=0 ? 'mp4' : 'webm';
+  const blob=new Blob(recChunks,{type});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='walkthrough.'+ext;
+  document.body.appendChild(a); a.click(); a.remove();
+}
 </script>
 </body>
-</html>
